@@ -8,7 +8,7 @@ to switch computers, then keep working with the same keyboard.
 
 **Current version: 1.11.0** · Windows 11 x64 · Local network
 
-[Read the English User Guide](docs/USER_GUIDE.md)
+[Read the English User Guide](USER_GUIDE.md)
 
 ## How it works
 
@@ -68,7 +68,7 @@ when upgrading from v1.10.x: the authenticated protocol changed in v1.11.0.
    Screens must share a grid edge for the pointer to cross between PCs.
 5. On Host, select **Settings → Connection diagnostics → Run connection test**.
 
-See the [User Guide](docs/USER_GUIDE.md) for the full PC-by-PC setup and daily use.
+See the [User Guide](USER_GUIDE.md) for the full PC-by-PC setup and daily use.
 The installer configures Windows Firewall, startup and the input service; no
 manual PowerShell firewall script is required. Investigate any setup warning:
 successful file installation alone does not confirm that the input service works.
@@ -96,8 +96,8 @@ Clock rollback expires a trial, but does not invalidate a saved paid license.
 
 When a signed release is available, click **Update now** on each PC. Installation
 briefly disconnects KVM and restarts DualFlow in the tray. Keep both PCs on
-compatible versions. See [Licensing and release operations](docs/LICENSING_AND_UPDATES.md)
-for publisher configuration, signing-key backup and release validation.
+compatible versions. See publisher documentation for configuration, signing-key
+backup and release validation.
 
 ## Security and practical limits
 
