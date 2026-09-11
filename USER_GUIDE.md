@@ -1,247 +1,114 @@
 # DualFlow KVM — User Guide
+**For Windows 11 · Version 1.11.5**
 
-For Windows 11 · Version 1.11.0
+Control two PCs with one keyboard and mouse. **PC 1 is the Host**, where your physical keyboard and mouse are connected. **PC 2 is the Client**, which you control seamlessly over the local network. Both PCs use their own connected monitors: DualFlow forwards low-latency input and clipboard streams, not heavy video or audio.
 
-Control two PCs with one keyboard and mouse. **PC 1 is the Host**, where your
-keyboard and mouse are connected. **PC 2 is the Client**, which you control over
-the local network. Both PCs keep using their own connected monitors.
+---
 
 ## Before you start
+* Connect both PCs to the same trusted local network (use the **Private network** profile in Windows; avoid guest networks with device isolation).
+* Have Windows administrator permissions available on both PCs during installation.
+* Keep a temporary mouse/keyboard handy on the Client PC during the very first pairing.
+* Use the **`DualFlow-KVM-v1.11.5-setup.exe`** installer on both PCs.
 
-- Connect both PCs to the same trusted local network. Guest-network isolation
-  must not prevent them from communicating.
-- Use the **Private** Windows network profile on that trusted network.
-- Have administrator permission and a temporary mouse/keyboard available on
-  Client for the initial setup.
-- Use the v1.11.0 setup EXE on both PCs, including when upgrading from v1.10.x. No developer tools
-  or manual firewall scripts are needed.
-
-The pairing code must be entered once before DualFlow's shared clipboard can
-work. Use a private method to carry the code from Host to Client.
+---
 
 ## 1. Set up PC 1 — Host
-
-1. Run `DualFlow-KVM-v1.11.0-setup.exe` and approve the normal Windows administrator
-   prompt if you trust the installer. Complete setup, then open DualFlow KVM.
+1. Run `DualFlow-KVM-v1.11.5-setup.exe` and complete the setup. Launch DualFlow KVM.
 2. Open **Settings**. Under **Computer role**, select **Host**.
-3. Leave **Network mode → Mode** set to **Auto discovery**. Keep the default ports
-   unless you need a custom network configuration.
-4. Under **Secure PC pairing**, select **Show pairing code**. Copy the complete
-   code for use on PC 2. Treat it as a secret: it authorizes control of the pair.
-5. Leave DualFlow running while you set up PC 2.
+3. Leave **Network mode** set to **Auto discovery** (unless your network specifically requires fixed IPs).
+4. Under **Secure PC pairing**, click **Show pairing code**. Copy or note the complete code. Treat this code securely: it authorizes remote control between the machines.
+5. Keep DualFlow running while you prepare PC 2.
 
-You can choose the role in Settings even if the initial **Set this PC as Host**
-button is unavailable while discovery is still running.
+---
 
 ## 2. Set up PC 2 — Client
-
-1. Install the same setup EXE on PC 2 and open DualFlow KVM.
+1. Run `DualFlow-KVM-v1.11.5-setup.exe` on PC 2 and launch DualFlow KVM.
 2. Open **Settings → Computer role** and select **Client**.
-3. Leave the network mode on **Auto discovery**, using the same ports as Host.
-4. Under **Secure PC pairing**, paste the complete Host code into **Pairing code**.
-   Select **Save pairing code**.
-5. Wait for the top-right status to change to **Linked**. After pairing, check
-   **Administrator prompts** in Settings: the installed input service should be
-   connected. Follow any error shown there before relying on UAC control.
+3. Leave **Network mode** on **Auto discovery**.
+4. Under **Secure PC pairing**, enter the pairing code generated on the Host, then click **Save pairing code**.
+5. Wait for the status indicator in the upper-right corner to show **Linked**.
+6. Check **Administrator prompts** in Settings: the background input service should report as connected. (This enables cursor control over UAC and elevated windows).
 
-Only one PC should be Host. Client receives the display arrangement and pointer
-preferences from Host; do not try to configure the screen layout on Client.
+> [!NOTE]
+> Only one PC can be the Host. The Client PC receives display arrangements, layouts, and pointer settings automatically from the Host.
 
-## Trial and lifetime activation — Host only
+---
 
-Your 10-day trial starts when you first select **Host**. The status below the
-header shows **Trial: X days left**. The trial uses UTC calendar days and cannot
-be restarted by reinstalling. Keep the Windows clock correct: moving it backwards
-expires the trial.
+## 3. Arrange and Test Displays (Host)
+1. On the **Host PC**, go to the **Displays** tab. Identify each display by its PC name and resolution.
+2. Drag each display card so the layout on screen mirrors your physical monitor setup (side-by-side or stacked).
+3. Ensure screen edges touch on the grid:
+   * Standard 16:9 displays occupy 1 tile.
+   * Ultrawide (32:9) displays occupy 2 columns; triple-surround setups occupy 3 columns.
+4. Changes save automatically and sync to the Client immediately.
+5. Move your mouse pointer across the shared edge to control the Client PC. Test typing in a text field, then bring the cursor back to the Host.
+6. You can now unplug the temporary physical mouse and keyboard from the Client PC.
 
-1. On Host, click the trial status to open the license dialog.
-2. To purchase, click **Buy Lifetime License (€29.95)**. Your default browser opens
-   the DualFlow store. Complete the purchase there and obtain your license key.
-3. Enter the key in DualFlow on Host and click **Activate**. Host needs internet
-   access for this step. Its Windows machine identifier and the key are sent to
-   Lemon Squeezy; activation is stored encrypted on this Host.
-4. Check for **Lifetime License Activated**. Client should show **Connected to
-   Licensed Host** when linked. During the trial it shows **Connected (Host on Trial)**.
+---
 
-Do not activate on Client. Client needs neither a license key nor internet for
-licensing. A saved lifetime activation works offline. One license allows one
-Host activation; contact the seller to release/reset it before moving to another
-Host or after replacing Windows/machine identity.
+## Software Updates (Crucial Sequence)
 
-If the trial expires, remote input and shared clipboard/file transfers stop,
-and local input is released. Settings, pairing diagnostics and updates remain
-available. Activate on Host to restore the bridge. If activation is interrupted
-after contacting the server, do not repeatedly activate: ask the seller to check
-the existing instance if the next attempt reports that the limit is reached.
+DualFlow checks for signed updates in the background. When an update is ready:
 
-## Software updates — Both PCs
+> [!IMPORTANT]
+> **ALWAYS UPDATE IN THIS ORDER:**
+> 1. **Update the Client PC first:** Move your cursor to the Client PC, open DualFlow Settings, and click **Update now**. The application will terminate safely, run the unattended update, and relaunch automatically with an **Updated to v1.11.5** confirmation banner. No local mouse or UAC clicks are required on the Client.
+> 2. **Update the Host PC second:** Move your cursor back to the Host PC and trigger **Update now**.
+> 3. Once the Host restarts, seamless control and cross-PC clipboard sharing reconnect automatically.
 
-DualFlow checks for signed updates in the background when it starts. This does
-not install anything automatically or require an active license.
+Starting Windows normally will always launch DualFlow quietly to the system tray. The main window opens only after an active update to confirm completion.
 
-1. Open **Show Settings** from the tray. The update notice is near the bottom.
-2. Click **Check for updates**, or **Update now** when a new version is shown.
-3. Save your work and allow the brief KVM disconnection. DualFlow verifies the
-   download, runs its installer and restarts silently in the tray.
-4. Repeat on the other PC and check the visible version on both PCs.
+---
 
-Update each PC locally if the previous update has left them on incompatible
-protocol versions. Keep temporary local input available. Internet is required
-for downloading; a failed check or rejected signature does not expire a license
-or stop the existing KVM connection. For v1.10.x or earlier, first install v1.11.0
-manually on both PCs; older builds do not contain this update engine.
+## Daily Use
 
-## 3. Return to PC 1 — Arrange and test
+### Switching Between PCs
+* **Move across the edge:** Glide the cursor through any shared monitor border configured in your display layout. The keyboard follows the cursor automatically.
+* **Edge Guard:** The bottom edge of the Client screen features a small guard zone so you can easily click the taskbar without accidentally jumping back to the Host.
+* **Emergency Return Shortcut:** Press `Pause` (or `Ctrl + Alt + F12`) on your physical Host keyboard to snap the cursor back to the Host screen immediately.
 
-1. Open **Displays** on Host. Identify each display by its PC name and resolution.
-2. Drag each display from its top-left cell to match the physical arrangement.
-   Place screens directly beside, above or below each other as appropriate.
-3. Make the intended crossing edges touch. An empty cell or a corner-only contact
-   does not create a crossing. Cards cannot overlap or extend outside the grid.
-4. Standard 16:9 displays use one tile regardless of resolution. A 32:9 display
-   spans two columns; a triple-surround display spans three. Move the entire card
-   as one piece. For a Client screen above the middle of a surround display, place
-   it directly above the middle occupied cell.
-5. Changes save automatically and appear on Client. There is no separate layout
-   Save button.
-6. Open **Settings → Connection diagnostics → Run connection test** on Host.
-   Follow the **Suggested solution** for any failed check.
-7. Move the mouse through a shared edge, click a text field on Client and type.
-   Return to Host and check that the pointer enters the expected screen segment.
+### Copying Text, Images, Files, and Folders
+* **Text & Images:** Copy on one PC with `Ctrl + C`, move to the other PC, and paste with `Ctrl + V`.
+* **Files & Folders (On-Demand Streaming):**
+  1. Select files or folders in File Explorer and press `Ctrl + C`. (DualFlow advertises the files instantly without heavy network transfer up front).
+  2. Switch to the target PC, navigate to any destination folder (or the **Windows Desktop**), and press `Ctrl + V`.
+  3. The file payload streams directly on demand, preserving nested folders and directory structures.
+* **Desktop Pasting:** Fully supported via native Windows Shell COM integration (`InShellDragLoop`).
 
-Once setup works, test with the temporary Client mouse unplugged. Confirm that
-the pointer remains visible on the desktop, Start and Search. Also test an
-administrator window and a UAC prompt before relying on remote input there.
+---
 
-## Daily use
+## Trial & Lifetime Licensing (Host Only)
+* A **10-day trial** begins automatically when a PC is first set to Host. Full functionality is available during the trial.
+* To purchase, click **Buy Lifetime License (€29.95)** on the Host. Complete checkout to receive your license key.
+* Enter the key in DualFlow on the Host and click **Activate**. (Internet access is required only for this one-time activation).
+* **The Client PC does not need a license key or internet access.** As long as the Host is licensed, the Client connects without restrictions.
+* Saved lifetime licenses remain fully functional offline during everyday LAN use.
 
-### Switch between PCs
+---
 
-Move the pointer to the physical edge of a screen that borders the other PC in
-the layout, then continue moving outward. The keyboard follows the pointer.
-At the bottom of a Client screen, the edge guard keeps the taskbar reachable;
-continue outward from the actual edge to return to Host.
+## Optional Settings
 
-If you ever need local control immediately, press **Pause** or **Ctrl+Alt+F12**
-on the **Host keyboard**. Pause is the simpler option if available. Keep local
-input available as a recovery method if neither shortcut responds.
+* **Pointer Sensitivity & Size (Host):**
+  * Keep **Auto-sync sensitivity (DPI match)** enabled for automatic DPI matching across different screen resolutions.
+  * Adjust the manual **Client Speed Multiplier** (0.50× to 2.50×) if you prefer a faster or slower cursor on the secondary PC.
+  * Enable **Sync cursor size** to keep the pointer size identical across both systems.
+* **Fixed IP / Custom Ports:**
+  * If your router or subnet blocks UDP discovery, switch **Network mode** to **Manual / fixed IP** on both PCs and enter the partner machine's IP address. Default ports: UDP `45831` (Discovery) and TCP `45832` (Input).
 
-### Use the system tray
-
-Right-click the DualFlow icon in the Windows notification area, near the clock:
-
-- **Show Settings** opens the app window.
-- **Quit** stops the app and ends the connection.
-
-Closing the window does not quit. After installation, DualFlow is configured to
-start silently when you sign in to Windows, using your saved settings. A manual
-launch can display the normal administrator prompt.
-
-### Copy text, images, files and folders
-
-For text and supported clipboard images, copy on one PC, switch to the other and
-paste into an application that accepts the content. Sharing works both ways.
-
-For files and folders:
-
-1. First open the destination folder in File Explorer on the receiving PC. Click
-   inside it and leave the pointer over that window before returning to the sender.
-2. On the sending PC, select the files or folders in Explorer and press **Ctrl+C**.
-   Copying starts the network transfer automatically.
-3. Keep both PCs connected. When transfer completes, DualFlow places the received
-   selection on the receiving clipboard and requests a paste at its cursor target.
-4. Check the destination. If nothing was pasted, select the intended destination
-   folder and press **Ctrl+V** after the transfer finishes. Do not paste again if
-   the files have already appeared.
-
-Nested files and empty folders are preserved. Use **Copy**, not Cut, and verify
-the received files before deleting any originals. Completed transfers use temporary
-disk space on the receiving PC as well as space for the pasted copy.
-
-Dragging an Explorer selection across a screen edge is **not supported**. Dropping
-onto the DualFlow window is an alternative only when Windows permits the drop.
-Symbolic links, junctions and other reparse points, including some cloud-backed
-files, are not supported; use ordinary local files. Folder hierarchy and contents
-are copied, not permissions, timestamps or other filesystem metadata.
-
-Clipboard sharing is automatic while linked. Quit DualFlow before copying content
-you do not want shared with the other PC.
-
-## Optional settings
-
-### Pointer speed and size — Host only
-
-Move the pointer back to Host before changing these settings.
-
-- Under **Cursor sensitivity**, keep **Auto-sync sensitivity (DPI match)** enabled
-  for resolution-based scaling. For manual control, turn it off, adjust **Client
-  Speed Multiplier** from 0.50× to 2.50× and select **Save sensitivity**.
-- Under **Cursor size**, choose **Cursor Size** level 1–5. Leave **Sync cursor size
-  to Client** checked to apply it to both PCs, then select **Save pointer settings**.
-
-To keep native cursor visibility available without a Client mouse, DualFlow uses
-temporary Windows Mouse Keys settings. Keep **Num Lock on** for normal numeric
-keypad entry; with it off, Mouse Keys may use the keypad for pointer navigation.
-
-### Fixed IP or custom ports — Both PCs
-
-Use Auto discovery unless your network requires manual addressing.
-
-1. On each PC, open **Settings → Network mode** and select **Manual / fixed IP**.
-2. In **Peer IPv4 address**, enter the **other PC's** address, not its own.
-3. Use matching port values on both PCs: **Discovery UDP** defaults to `45831`
-   and **Input TCP** defaults to `45832`.
-4. Select **Save network settings**, then **Restart DualFlow** when prompted.
-5. Repeat on the other PC, then run the connection test from Host.
-
-Manual mode does not configure a static address in Windows or bypass network
-isolation. The chosen peer addresses must remain valid and reachable. Pairing is
-still required. Do not expose these ports to the internet.
-
-### Change roles
-
-Select **Host** or **Client** under **Settings → Computer role** on each PC.
-Keep exactly one Host, with the physical keyboard and mouse connected to it.
-Role changes interrupt control; have local input available and recheck pairing
-and the display layout afterward.
-
-## Updates and display sleep
-
-The running version appears in the app footer and at the top of Settings.
-For updates, have local input available on the PC being updated, use **Quit** in
-the tray, then run the newer setup EXE. Do not uninstall or delete settings first.
-An existing 1.10.7 Host can remain paired with a 1.10.8 Client; this particular
-update does not require a Host reinstall.
-
-Entering Client requests a display/screensaver wake-up. This is not Wake-on-LAN:
-a fully sleeping, hibernating or powered-off PC must be woken separately. Password
-protection still requires normal Windows sign-in. UAC still requires your explicit
-Yes/No choice and a working installed input service.
+---
 
 ## Troubleshooting
 
-Start with **Run connection test** in Host Settings, then use the relevant check:
+| Symptom | Resolution |
+| :--- | :--- |
+| **Discovering / Waiting for link** | Verify both machines are set to the Private Network profile in Windows. Ensure one PC is set as Host and the other as Client, and verify the pairing code matches. |
+| **Linked, but pointer won't cross** | Check the **Displays** tab on Host. Screens must share an adjacent occupied grid edge (corners touching diagonally do not count). |
+| **Pointer lost / unresponsive** | Press `Pause` or `Ctrl + Alt + F12` on the Host keyboard to force-return the cursor. Check connection diagnostics in Settings. |
+| **Cannot control UAC or Admin prompts** | Confirm the background input service is running. Check **Administrator prompts** in Settings on the Client PC. Re-run setup if the service was removed. |
+| **File transfer paste doesn't trigger** | Ensure you are pasting into standard File Explorer or onto the Desktop. Reparse points, cloud placeholders, and symbolic links are excluded for stability. |
 
-| Symptom | What to check |
-| --- | --- |
-| Discovering / Waiting for link | Both apps are running, one Host and one Client, same pairing code, matching ports, trusted Private network, no guest isolation. For Manual mode, verify the peer addresses. |
-| Linked, but the pointer will not cross | Configure Displays on Host. The screens must share an occupied grid edge. Check for an input-hook error and run the connection test. |
-| Input stops or the pointer is missing | Use Pause or Ctrl+Alt+F12 on Host. Check Client's version and any displayed error. Restart DualFlow normally; retain local input for recovery. |
-| An administrator window or UAC prompt cannot be controlled | Check Administrator prompts in Client Settings. Use the installed setup version, not just a copied application EXE. Do not disable UAC or Secure Desktop. |
-| A file or folder did not arrive | Allow the transfer to finish, check disk space and any transfer error, then paste into Explorer. Use ordinary local files rather than links or cloud placeholders. |
-| The settings window disappears | Closing it hides it to the tray. Choose Show Settings from the tray menu. |
-
-If you need to report a problem, include versions on **both** PCs, their roles,
-the connection-test result, the exact error and the steps that reproduce it.
-For setup or input-service issues, the default installation folder contains:
-
+Diagnostic logs are located at:
 ```text
+C:\Program Files\DualFlow KVM\update-lifecycle.log
 C:\Program Files\DualFlow KVM\input-service-install.log
-C:\Program Files\DualFlow KVM\helper-panic.log
-```
-
-If you installed elsewhere, use that folder instead. Do not post pairing codes
-or your configuration file publicly. Windows-managed security policies and some
-protected desktops may prevent remote input; keep a local recovery method.
-
-[Back to README](../README.md)
