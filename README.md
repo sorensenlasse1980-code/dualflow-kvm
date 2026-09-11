@@ -5,7 +5,7 @@ DualFlow KVM lets you control two Windows 11 computers using the keyboard and mo
 
 **Current version:** 1.11.5 · Windows 11 x64 · Local network
 
-[Read the English User Guide](docs/USER_GUIDE.md)
+[Read the English User Guide](USER_GUIDE.md)
 
 ---
 
