@@ -1,7 +1,3 @@
-from pathlib import Path
-
-content = r"""# DualFlow KVM
-
 **One keyboard and mouse. Two Windows PCs.**
 
 DualFlow KVM is a high-performance software KVM for Windows 11 that lets you control two computers using the keyboard and mouse connected to one of them.
