@@ -1,7 +1,3 @@
-from pathlib import Path
-
-text = """# DualFlow KVM — User Guide
-
 **For Windows 11 · Version 1.12.0**
 
 Control two PCs with one keyboard and mouse. **PC 1 is the Host**, where your physical keyboard and mouse are connected. **PC 2 is the Client**, which you control seamlessly over the local network. Both PCs use their own connected monitors: DualFlow forwards low-latency input, clipboard, and file-transfer data — not heavy video or audio streams.
